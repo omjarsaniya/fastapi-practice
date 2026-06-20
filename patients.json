@@ -1,0 +1,5 @@
+{"P001" : {"name": "om jarsaniya", "city": "surat", "age": 20, "gender": "male", "height": 1.69, "weight": 65.0, "bmi": 30.00, "verdict": "obese" },
+"P002" : {"name": "foram kathrotiya", "city": "vadodara", "age": 20, "gender": "male", "height": 1.71, "weight": 55.0, "bmi": 33.00, "verdict": "obese" },
+"P003" : {"name": "dev kamani", "city": "jamnagar", "age": 27, "gender": "male", "height": 1.78, "weight": 115.0, "bmi": 31.00, "verdict": "over weight" },
+"P004" : {"name": "rich amrutiya", "city": "rajkot", "age": 20, "gender": "male", "height": 1.72, "weight": 63.0, "bmi": 29.00, "verdict": "obese" },
+"P005" : {"name": "kavy desai", "city": "surat", "age": 18, "gender": "male", "height": 1.75, "weight": 99.0, "bmi": 32.00, "verdict": "over weight" }}
