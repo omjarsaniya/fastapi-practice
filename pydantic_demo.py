@@ -3,6 +3,13 @@ from pydantic import BaseModel, EmailStr, AnyUrl, Field, field_validator, model_
 ### Field(not custome) is useful for numerical and string based datatypes for custome data validation
 from typing import List , Dict , Optional , Annotated
 
+class Address(BaseModel):
+
+    city: str
+    state: str
+    pin: str
+
+
 class patient(BaseModel): ## BYDEFAULT ALL FIELDS ARE REQUIRED BUT CAN BE OPTIONAL USING OPTIONAL  BY GIVING DEFAULT VALUE NONE 
 
     ### TYPE VALIDATION
@@ -17,6 +24,10 @@ class patient(BaseModel): ## BYDEFAULT ALL FIELDS ARE REQUIRED BUT CAN BE OPTION
         #values in allergies list should be string 
         #there is optional there for if there in no allergies then it will show None          
     contact_details: Dict[str,str] #values in contect detail dictionary should be string and string
+    address: Address
+
+
+
 
     ### FIELD VALIDATOR (SHOULD BE INSIDE CLASS)
     @field_validator('name')
@@ -48,8 +59,14 @@ class patient(BaseModel): ## BYDEFAULT ALL FIELDS ARE REQUIRED BUT CAN BE OPTION
     def calculate_bmi(self) -> float:
         bmi = round(self.weight/(self.height**2),2)
         return bmi
+    
 
-patient_info = {'name':'om', 'age':65, 'weight':65.0, 'height':1.69, 'email':'abc@hdfc.com', 'married':True, 'allergies':['pollen','dust'], 'contact_details':{'email':'abc@gamil.com','phone':'9876543210','emergency':'565656'}}
+
+address_dict = {'city':'surat', 'state':'gujarat', 'pin':'395010'}
+address1 = Address(**address_dict)
+
+
+patient_info = {'name':'om', 'age':65, 'weight':65.0, 'height':1.69, 'email':'abc@hdfc.com', 'married':True, 'allergies':['pollen','dust'], 'contact_details':{'email':'abc@gamil.com','phone':'9876543210','emergency':'565656'},'address':address1}
 
 ### INSERTING 
 def insert_patient_data(patient: patient):
@@ -57,6 +74,7 @@ def insert_patient_data(patient: patient):
     print(patient.age)
     print(patient.allergies)
     print('BMI',patient.calculate_bmi)
+    print(patient.address)
     print('inserted patient data')
 
 patient1 = patient(**patient_info)
