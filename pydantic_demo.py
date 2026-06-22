@@ -89,3 +89,16 @@ def update_patient_data(patient: patient):
 
 update_patient_data(patient1)
 
+
+### SERIALIZATION (FOR EXPORTING PYDANTIC MODEL OBJECTS)
+
+# PYTHON DICTIONARY FORMAT
+temp = patient1.model_dump() ## we can include and exclude fields on our own way
+print(temp)
+print(type(temp))
+
+# JSON FORMAT
+temp = patient1.model_dump_json() ## we can include and exclude fields on our own way
+print(temp)
+print(type(temp))
+
