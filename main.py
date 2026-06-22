@@ -24,6 +24,12 @@ def view():
 
     return data
 
+
+
+### path parameters & http exceptions
+
+#path params use when fetching perticular resource and helps in retrival,update and delete
+
 @app.get('/patient/{patient_id}')
 def view_patient(patient_id: str = Path(..., description='ID of patient',example='P001')):
     #load all the patients
@@ -32,6 +38,12 @@ def view_patient(patient_id: str = Path(..., description='ID of patient',example
     if patient_id in data:
         return data[patient_id]
     raise HTTPException(status_code=404, detail='Patient not found')
+
+
+
+### query parameters
+
+#query params use when searching , filtering etc... 
 
 @app.get('/sort')
 def sort_patients(sort_by: str = Query(..., description= 'Sort on the basis of hight or weight or bmi'), order: str = Query('asc', description= 'Sort in asc or desc order')):
