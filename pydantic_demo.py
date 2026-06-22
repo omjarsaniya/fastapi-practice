@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr, AnyUrl, Field, field_validator, model_validator
+from pydantic import BaseModel, EmailStr, AnyUrl, Field, field_validator, model_validator, computed_field
 ### EmailStr, AnyUrl this are custome datatypes...
 ### Field(not custome) is useful for numerical and string based datatypes for custome data validation
 from typing import List , Dict , Optional , Annotated
@@ -10,7 +10,8 @@ class patient(BaseModel): ## BYDEFAULT ALL FIELDS ARE REQUIRED BUT CAN BE OPTION
     age: int = Field(gt=0 ,lt=120)
     email: EmailStr
     ### COMPLEX TYPE VALIDATION
-    weight: Annotated[float, Field(gt=0, strict=True)]
+    weight: Annotated[float, Field(gt=0, strict=True)] #kgs
+    height: float #meters
     married: Optional[bool] = None
     allergies: Annotated[Optional[list[str]], Field(default=None, max_length=5)] 
         #values in allergies list should be string 
@@ -41,15 +42,21 @@ class patient(BaseModel): ## BYDEFAULT ALL FIELDS ARE REQUIRED BUT CAN BE OPTION
             raise ValueError('patients older than 60 must have an emergency contact in contact details')
         return self
 
+    ### COMPUTED FIELDS
+    @computed_field
+    @property
+    def calculate_bmi(self) -> float:
+        bmi = round(self.weight/(self.height**2),2)
+        return bmi
 
-
-patient_info = {'name':'om', 'age':65, 'weight':65.0, 'email':'abc@hdfc.com', 'married':True, 'allergies':['pollen','dust'], 'contact_details':{'email':'abc@gamil.com','phone':'9876543210','emergency':'565656'}}
+patient_info = {'name':'om', 'age':65, 'weight':65.0, 'height':1.69, 'email':'abc@hdfc.com', 'married':True, 'allergies':['pollen','dust'], 'contact_details':{'email':'abc@gamil.com','phone':'9876543210','emergency':'565656'}}
 
 ### INSERTING 
 def insert_patient_data(patient: patient):
     print(patient.name)
     print(patient.age)
     print(patient.allergies)
+    print('BMI',patient.calculate_bmi)
     print('inserted patient data')
 
 patient1 = patient(**patient_info)
