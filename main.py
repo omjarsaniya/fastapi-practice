@@ -165,7 +165,7 @@ def update_patient(patient_id:str, patient_update: PatientsUpdate):
     # save data
     save_data(data)
 
-    return JSONResponse(status_code=200, content={'message': 'patient updated'})
+    return JSONResponse(status_code=200, content={'message': 'patient updated successfully'})
 
 ### delete request for deleting the patient data in dataset
 
@@ -182,5 +182,6 @@ def delete_patient(patient_id: str):
 
     save_data(data)
 
-    return JSONResponse(status_code=200, content={'message': 'patient updated'})
+    return JSONResponse(status_code=200, content={'message': 'patient deleted successfully'})
+
 
