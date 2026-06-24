@@ -110,6 +110,8 @@ def sort_patients(sort_by: str = Query(..., description= 'Sort on the basis of h
     return sorted_data
 
 
+### post request for creating new patient
+
 @app.post('/create')
 def create_patient (patient: Patients):
     
@@ -128,6 +130,8 @@ def create_patient (patient: Patients):
 
     return JSONResponse(status_code=201, content={'message':'patient created successfully'})
 
+
+### put request for updating the patient data
 
 @app.put('/edit/{patient_id}')
 def update_patient(patient_id:str, patient_update: PatientsUpdate):
@@ -159,6 +163,23 @@ def update_patient(patient_id:str, patient_update: PatientsUpdate):
     data[patient_id] = existing_patient_info
 
     # save data
+    save_data(data)
+
+    return JSONResponse(status_code=200, content={'message': 'patient updated'})
+
+### delete request for deleting the patient data in dataset
+
+@app.delete('/delete/{patient_id}')
+def delete_patient(patient_id: str):
+
+    # load data
+    data = load_data()
+
+    if patient_id not in data:
+        raise HTTPException(status_code=404, detail='patient not found')
+    
+    del data[patient_id]
+
     save_data(data)
 
     return JSONResponse(status_code=200, content={'message': 'patient updated'})
